@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { auth, provider } from "../Firebase.config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import './Login.css';
@@ -7,10 +7,11 @@ import logo from '../images/profileLogoBlk.png';
 
 
 function Login({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateAction<boolean>> }){
-  var email = "macof2012@gmail.com";
-  var password = "Test1234!"
+  const [email, setEmail] = useState("macof2012@gmail.com");
+  const [password, setPassword] = useState("Test1234!");
 
   const signIn = () => {
+    console.log(password);
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     const user = userCredential.user;
@@ -41,13 +42,18 @@ function Login({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateAction<b
             className="fadeIn second" 
             name="email" 
             placeholder="email"
-            value={email} />
-      <input type="text" 
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}/>
+      <input type="password" 
             id="password" 
             className="fadeIn third" 
             name="login" 
             placeholder="password"
-            value={password} />
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}/>
       <input type="button" 
           className="fadeIn fourth" 
           value="Log In" 

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../../Firebase.config";
@@ -6,17 +5,22 @@ import { useNavigate } from "react-router-dom";
 import "./Profile.css";
 
 function ProfileSettings(props: { isAuth: boolean }) {
-  const [title, setTitle] = useState("");
-  const [postText, setPostText] = useState("");
+  const [fullName, setFullName] = useState("Mike Chavez");
+  const [email, setEmail] = useState("macof2012@gmail.com");
+  const [birthday, setBirthday] = useState("11/12/2020");
 
-  const postsCollectionRef = collection(db, "posts");
+  const usersCollectionRef = collection(db, "users");
   let navigate = useNavigate();
 
   const createSettings = async () => {
-    await addDoc(postsCollectionRef, {
-      title,
-      postText,
-      author: { name: auth.currentUser!.displayName, id: auth.currentUser!.uid },
+    await addDoc(usersCollectionRef, {
+      fullName,
+      email,
+      birthday,
+      author: {
+        email: auth.currentUser!.email,
+        id: auth.currentUser!.uid,
+      },
     });
     navigate("/");
   };
@@ -57,6 +61,9 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="fullName"
                   placeholder="Full Name"
+                  onChange={(event) => {
+                    setFullName(event.target.value);
+                  }}
                 />
               </div>
               <div>
@@ -65,6 +72,9 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="email"
                   placeholder="Email"
+                  onChange={(event) => {
+                    setEmail(event.target.value);
+                  }}
                 />
               </div>
               <div>
@@ -81,11 +91,14 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="birthday"
                   placeholder="Birthday"
+                  onChange={(event) => {
+                    setBirthday(event.target.value);
+                  }}
                 />
               </div>
               <div className="row mt-5">
                 <div className="col">
-                  <input type="button" value="Save" />
+                  <input type="button" value="Save" onClick={createSettings} />
                 </div>
                 <div className="col">
                   <input type="button" value="Cancel" />
