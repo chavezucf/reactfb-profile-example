@@ -7,5 +7,4 @@ function Home(props: {isAuth:boolean}) {
     <h1> Home </h1>
   );
 }
-
 export default Home;

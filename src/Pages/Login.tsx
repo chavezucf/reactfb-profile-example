@@ -4,21 +4,23 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import './Login.css';
 import logo from '../images/profileLogoBlk.png';
 
-function Login(props: {isAuth:boolean}) {
 
+
+function Login({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateAction<boolean>> }){
   const email = "macof2012@gmail.com";
   const password = "Test1234!"
 
   const signIn = () => {
   signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    // Signed in 
     const user = userCredential.user;
+    setIsAuth(true);
     console.log("Success" + user);
   })
   .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
+    setIsAuth(false);
     console.log("error" + error);
   });
 }

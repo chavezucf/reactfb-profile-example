@@ -9,6 +9,7 @@ import { useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "./Firebase.config";
 import './App.css';
+import { wait } from '@testing-library/user-event/dist/utils';
 
 
 
@@ -20,7 +21,6 @@ function App() {
     signOut(auth).then(() => {
       localStorage.clear();
       setIsAuth(false);
-      window.location.pathname = "/login";
     });
   };
   
@@ -29,20 +29,19 @@ function App() {
     <Router>
       <nav>
         <Link to="/"> Home </Link>
-
         {!isAuth ? (
-          <Link to="/login"> Login </Link>
+          <Link className="LogInOutButton" to="/login"> Login </Link>
         ) : (
           <>
-            <Link to="/Profile"> Profile </Link>
-            <button onClick={signUserOut}> Log Out</button>
+            <Link to="/Profile"> Your Profile </Link>
+            <button className="LogInOutButton" onClick={signUserOut}> Log Out</button>
           </>
         )}
       </nav>
       <Routes>
         <Route path="/" element={<Home isAuth={isAuth} />} />
         <Route path="/Profile" element={<Profile isAuth={isAuth} />} />
-        <Route path="/login" element={<Login isAuth={isAuth} />} />
+        <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
       </Routes>
     </Router>
   );
