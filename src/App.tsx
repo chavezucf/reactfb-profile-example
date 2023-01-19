@@ -42,7 +42,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home isAuth={isAuth} />} />
         <Route path="/Profile" element={<Profile isAuth={isAuth} />} />
-        {/* <Route path="/login" element={<Login setIsAuth={setIsAuth} />} /> */}
+        <Route path="/login" element={<Login isAuth={isAuth} />} />
       </Routes>
     </Router>
   );
