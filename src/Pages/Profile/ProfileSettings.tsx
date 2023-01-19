@@ -25,11 +25,11 @@ function ProfileSettings(props: { isAuth: boolean }) {
     navigate("/");
   };
 
-  // useEffect(() => {
-  //   if (!isAuth) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!props.isAuth) {
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div className="container content clear-fix">
