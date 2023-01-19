@@ -18,7 +18,7 @@ html {
     font-weight: 400;
   }
   
-  h2 {
+  .signIn {
     text-align: center;
     font-size: 16px;
     font-weight: 600;
@@ -131,7 +131,7 @@ html {
     transform: scale(0.95);
   }
   
-  input[type=text] {
+  input[type=text], input[type=email], input[type=password], input[type=date] {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;

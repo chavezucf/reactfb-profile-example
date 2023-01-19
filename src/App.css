@@ -26,13 +26,6 @@ a {
   font-size: 25px;
 }
 
-.createPostPage {
-  width: 100%;
-  height: calc(100vh - 80px);
-  display: grid;
-  place-items: center;
-}
-
 .cpContainer {
   width: 500px;
   height: auto;
@@ -143,47 +136,34 @@ textarea {
   align-items: center;
   padding-top: 20px;
 }
-
-.homePage .post {
-  width: 600px;
-  height: auto;
-  max-height: 600px;
-  background-color: rgb(250, 250, 250);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 15px;
-}
-
-.post .postHeader {
+/*More */
+  .card {
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 15px 1px rgba(52,40,104,.08);
+  }
+  .card {
+  position: relative;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.postHeader .title {
-  flex: 50%;
-}
-.postHeader .deletePost {
-  flex: 50%;
-  display: flex;
+  -ms-flex-direction: column;
   flex-direction: column;
-  align-items: flex-end;
-}
-
-.deletePost button {
-  border: none;
-
-  background: none;
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.post .postTextContainer {
+  min-width: 0;
   word-wrap: break-word;
-  height: auto;
-  max-height: 400px;
-  width: 100%;
-  overflow: hidden;
-  overflow-y: auto;
-}
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid #e5e9f2;
+  border-radius: .2rem;
+  }
+  .card-header:first-child {
+  border-radius: calc(.2rem - 1px) calc(.2rem - 1px) 0 0;
+  }
+  .card-header {
+  border-bottom-width: 1px;
+  }
+  .card-header {
+  padding: .75rem 1.25rem;
+  margin-bottom: 0;
+  color: inherit;
+  background-color: #fff;
+  border-bottom: 1px solid #e5e9f2;
+  }

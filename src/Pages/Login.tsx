@@ -7,8 +7,8 @@ import logo from '../images/profileLogoBlk.png';
 
 
 function Login({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateAction<boolean>> }){
-  const email = "macof2012@gmail.com";
-  const password = "Test1234!"
+  var email = "macof2012@gmail.com";
+  var password = "Test1234!"
 
   const signIn = () => {
   signInWithEmailAndPassword(auth, email, password)
@@ -32,7 +32,7 @@ function Login({ setIsAuth }: { setIsAuth: React.Dispatch<React.SetStateAction<b
     <div className='image_container'>
   <img src={logo} />
   </div>
-    <h2 className="active"> Sign In </h2>
+    <h2 className="active signIn"> Sign In </h2>
     {/* <h2 className="inactive underlineHover">Sign Up </h2> */}
 
     <form>
