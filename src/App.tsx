@@ -14,12 +14,16 @@ import "./App.css";
 import { wait } from "@testing-library/user-event/dist/utils";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
 
   const signUserOut = () => {
     signOut(auth).then(() => {
       localStorage.clear();
       setIsAuth(false);
+      window.location.pathname = "/login";
+    }).catch((error) => {
+      // An error happened.
+      console.error("error")
     });
   };
 

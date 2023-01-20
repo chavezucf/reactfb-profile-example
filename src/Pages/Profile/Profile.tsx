@@ -6,7 +6,7 @@ function Profile(props: { isAuth: boolean }) {
   return (
     <div
       className="container-fluid main"
-      style={{ height: "100vh", paddingLeft: "0px" }}
+      style={{paddingLeft: "0px" }}
     >
       <div className="row">
         <div className="col-md-3 d-none d-md-block ">

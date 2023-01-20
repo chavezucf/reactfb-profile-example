@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { addDoc, collection } from "firebase/firestore";
+import { setDoc, collection, doc } from "firebase/firestore";
 import { db, auth } from "../../Firebase.config";
 import { useNavigate } from "react-router-dom";
+import { IUser } from "../../Models/IUser";
+import { UserService } from "../../Services/UserService";
 import "./Profile.css";
 
 function ProfileSettings(props: { isAuth: boolean }) {
@@ -9,23 +11,30 @@ function ProfileSettings(props: { isAuth: boolean }) {
   const [email, setEmail] = useState("macof2012@gmail.com");
   const [birthday, setBirthday] = useState("11/12/2020");
 
+
   const usersCollectionRef = collection(db, "users");
   let navigate = useNavigate();
 
   const createSettings = async () => {
-    await addDoc(usersCollectionRef, {
+    await setDoc(doc(usersCollectionRef, auth.currentUser!.uid), {
       fullName,
       email,
       birthday,
-      author: {
-        email: auth.currentUser!.email,
-        id: auth.currentUser!.uid,
-      },
     });
     navigate("/");
   };
 
   useEffect(() => {
+    const getCurrentUser = async () => {
+      var user:IUser | undefined = await UserService.getCurrentUser();
+      if(user)
+      {
+        setFullName(user.fullName);
+        setBirthday(user.birthday);
+        setEmail(user.email);
+      }
+    };
+    getCurrentUser();
     if (!props.isAuth) {
       navigate("/login");
     }
@@ -61,6 +70,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="fullName"
                   placeholder="Full Name"
+                  value={fullName}
                   onChange={(event) => {
                     setFullName(event.target.value);
                   }}
@@ -72,17 +82,10 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="email"
                   placeholder="Email"
+                  value={email}
                   onChange={(event) => {
                     setEmail(event.target.value);
                   }}
-                />
-              </div>
-              <div>
-                <input
-                  type="password"
-                  className=""
-                  id="password"
-                  placeholder="Password"
                 />
               </div>
               <div>
@@ -91,6 +94,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="birthday"
                   placeholder="Birthday"
+                  value={birthday}
                   onChange={(event) => {
                     setBirthday(event.target.value);
                   }}
