@@ -12,8 +12,16 @@ function Login({ setIsAuth, }: {
   let navigate = useNavigate();
 
   const signIn = async () => {
-    setIsAuth(await LoginService.SignIn(email,password));
-    navigate("/HomeFeed");
+    LoginService.SignIn(email,password)
+    .then((userCredential) => {
+      setIsAuth(true);
+      navigate("/HomeFeed");
+    })
+    .catch((error) => {
+      console.log("error" + error);
+      setIsAuth(false);
+      navigate("/HomeLogin");
+    });
   };
 
   return (

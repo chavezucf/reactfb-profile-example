@@ -8,21 +8,23 @@ import ProfileSettings from "./Pages/Profile/ProfileSettings";
 import ProfileNotReady from "./Pages/Profile/ProfileNotReady";
 import Login from "./Pages/Login";
 
+import { LoginService } from "./Services/LoginService";
 import { useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "./Services/FirebaseService"; //TODO
 import "./App.css";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   const signUserOut = () => {
-    signOut(auth).then(() => {
+    LoginService.SignOut()
+    .then((bool) => {
       localStorage.clear();
       setIsAuth(false);
       window.location.pathname = "HomeLogin";
-    }).catch((error) => {
-      console.error("error")
+    })
+    .catch(() => {
+      setIsAuth(true);
+      window.location.pathname = "HomeFeed";
     });
   };
 
