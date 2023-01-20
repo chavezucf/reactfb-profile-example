@@ -9,19 +9,19 @@ function ProfileSettings(props: { isAuth: boolean }) {
   const [file, setFile] = useState<File>();
 
   const updateUser = async () => {
-    await UserService.setUser( user!.fullName,  user!.email, user!.birthday);
+    await UserService.SetUser( user!.fullName,  user!.email, user!.birthday);
   };
 
   const setUserImage = async () => {
     if(file !== undefined )
-      await UserService.setUserImage(file, user!.userId);
+      await UserService.SetUserImage(file, user!.userId);
     else 
       console.error("No file");
   };
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      var user: IUser | undefined = await UserService.getCurrentUser();
+      var user: IUser | undefined = await UserService.GetCurrentUser();
       if (user) {
         setUser(user);
       }

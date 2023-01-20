@@ -13,7 +13,7 @@ function Login({ setIsAuth, }: {
 
   const signIn = async () => {
     setIsAuth(await LoginService.SignIn(email,password));
-    navigate("/");
+    navigate("/HomeFeed");
   };
 
   return (

@@ -1,7 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import Home from "./Pages/Home";
+import HomeLogin from "./Pages/HomeLogin";
+import HomeFeed from "./Pages/HomeFeed";
 import Profile from "./Pages/Profile/Profile";
 import ProfileSettings from "./Pages/Profile/ProfileSettings";
 import ProfileNotReady from "./Pages/Profile/ProfileNotReady";
@@ -19,9 +20,8 @@ function App() {
     signOut(auth).then(() => {
       localStorage.clear();
       setIsAuth(false);
-      window.location.pathname = "/login";
+      window.location.pathname = "HomeLogin";
     }).catch((error) => {
-      // An error happened.
       console.error("error")
     });
   };
@@ -29,14 +29,16 @@ function App() {
   return (
     <Router>
       <nav>
-        <Link to="/"> Home </Link>
         {!isAuth ? (
-          <Link className="LogInOutButton" to="/login">
-            {" "}
-            Login{" "}
-          </Link>
+          <>
+            <Link className="LogInOutButton" to="/Login">
+              {" "}
+              Login{" "}
+            </Link>
+          </>
         ) : (
           <>
+            <Link to="/HomeFeed"> Feed </Link>
             <Link to="/Profile/Settings"> Your Profile </Link>
             <button className="LogInOutButton" onClick={signUserOut}>
               {" "}
@@ -46,7 +48,9 @@ function App() {
         )}
       </nav>
       <Routes>
-        <Route path="/" element={<Home isAuth={isAuth} />} />
+        <Route path="/" element={<HomeLogin setIsAuth={setIsAuth} />} />
+        <Route path="/HomeLogin" element={<HomeLogin setIsAuth={setIsAuth} />} />
+        <Route path="/HomeFeed" element={<HomeFeed isAuth={isAuth} />} />
         <Route path="Profile" element={<Profile isAuth={isAuth} />}>
           <Route
             path="Settings"
@@ -65,7 +69,7 @@ function App() {
             element={<ProfileNotReady isAuth={isAuth} />}
           />
         </Route>
-        <Route path="login" element={<Login setIsAuth={setIsAuth} />} />
+        <Route path="Login" element={<Login setIsAuth={setIsAuth} />} />
       </Routes>
     </Router>
   );
