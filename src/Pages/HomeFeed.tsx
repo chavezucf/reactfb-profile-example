@@ -33,10 +33,8 @@ function HomeFeed(props: { isAuth: boolean }) {
                   <img src={user.imageUrl} style={{ width: "50px" }} />
                 </div>
                 <h2>{user.fullName}</h2>
-                <ul>
-                  <li>{user.email}</li>
-                  <li>{user.birthday}</li>
-                </ul>
+                <h6>{user.email}</h6>
+                <h6>{user.birthday}</h6>
               </div>
             );
           })}
