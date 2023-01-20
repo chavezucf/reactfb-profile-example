@@ -3,7 +3,6 @@ h2{
     color: black
 }
 
-
 form *{
     font-weight: bold;
 }
@@ -75,96 +74,4 @@ form .btn{
         margin:auto;
     }
     
-}
-
-.menu {
-    position: absolute;
-    right: 10%;
-    top:30px;
-    margin:auto;
-    display: none;  
-    cursor:pointer;
-    z-index: 5;
-    height: 33px;
-    width:30px;
-}
-
-.bar,.bar:after,.bar:before {
-    width:30px;
-    height:3px;
-    background: #6c63ff;
-    transition: all 0.2s;
-}
-
-.bar{
-    position: relative;
-}
-
-.bar:after {
-    position: absolute;
-    content: '';
-    left:0;
-    top:10px;
-    transition: top 0.2s 0.2s,transform 0.2s;
-}
-
-.bar:before {
-    position: absolute;
-    content: '';
-    left:0;
-    bottom:10px;
-    transition: bottom 0.2s 0.2s,transform 0.2s;
-}
-.bar.animate{
-    background: transparent;
-}
-.bar.animate:after{
-    top:0;
-    transform: rotate(45deg);
-    transition: top 0.2s ,transform 0.2s 0.2s;
-    background: #fff;
-}
-
-.bar.animate:before{
-    bottom:0;
-    transform: rotate(-45deg);
-    transition: bottom 0.2s,transform 0.2s  0.2s;
-    background: #fff;
-}
-
-.expand-menu {
-    position: absolute;
-    z-index: 1;
-    height: 100%;
-    width: 100%;
-    background: #6c63ff;
-    transition: width 0.5s;
-    width: 0%;
-}
-
-.expand-menu .nav-link{
-    margin-left:auto;
-    margin-right:auto;
-    margin-bottom: 20px;
-    color:#dddce5;
-    font-size:1.5rem;
-    display: none;
-    opacity: 0;
-    transition: all 0.5s;
-}
-
-.expand-menu .nav-link.animate{
-    display: block;
-}
-
-.expand-menu .nav-link.animate-show{
-    opacity:1;
-}
-
-.expand-menu .nav-link.active{
-    color:#fff;
-}
-
-.expand-menu.animate{
-    width : 100%;
 }
