@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { setDoc, collection, doc } from "firebase/firestore";
-import { db, auth } from "../../Firebase.config";
-import { useNavigate } from "react-router-dom";
 import { IUser } from "../../Models/IUser";
 import { UserService } from "../../Services/UserService";
 import "./Profile.css";
@@ -11,16 +8,8 @@ function ProfileSettings(props: { isAuth: boolean }) {
   const [email, setEmail] = useState("");
   const [birthday, setBirthday] = useState("");
 
-  const usersCollectionRef = collection(db, "users");
-  let navigate = useNavigate();
-
-  const createSettings = async () => {
-    await setDoc(doc(usersCollectionRef, auth.currentUser!.uid), {
-      fullName,
-      email,
-      birthday,
-    });
-    navigate("/");
+  const setUser = async () => {
+    await UserService.setUser(fullName, email, birthday);
   };
 
   useEffect(() => {
@@ -33,10 +22,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
       }
     };
     getCurrentUser();
-    if (!props.isAuth) {
-      navigate("/login");
-    }
-  }, []);
+  });
 
   return (
     <div className="container content clear-fix">
@@ -100,13 +86,19 @@ function ProfileSettings(props: { isAuth: boolean }) {
               </div>
               <div className="row mt-5">
                 <div className="col">
-                  <input type="button" value="Save" onClick={createSettings} />
+                  <input type="button" value="Save" onClick={setUser} />
                 </div>
                 <div className="col">
                   <button
                     className="btn"
-                    style={{ color: "#8f9096", fontWeight: "600", padding:"15px 80px" }}
-                  >Cancel</button>
+                    style={{
+                      color: "#8f9096",
+                      fontWeight: "600",
+                      padding: "15px 80px",
+                    }}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </form>

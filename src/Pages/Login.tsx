@@ -1,25 +1,19 @@
 import React, { useState } from "react";
-import { auth } from "../Firebase.config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { LoginService } from "../Services/LoginService";
 import "./Login.css";
 import logo from "../images/profileLogoBlk.png";
+import { useNavigate } from "react-router-dom";
 
 function Login({ setIsAuth, }: {
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [email, setEmail] = useState("macof2012@gmail.com"); //TODO
   const [password, setPassword] = useState("Test1234!");
+  let navigate = useNavigate();
 
-  const signIn = () => {
-    console.log(password);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setIsAuth(true);
-      })
-      .catch((error) => {
-        setIsAuth(false);
-        console.log("error" + error);
-      });
+  const signIn = async () => {
+    setIsAuth(await LoginService.SignIn(email,password));
+    navigate("/");
   };
 
   return (
