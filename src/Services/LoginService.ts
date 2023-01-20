@@ -1,4 +1,4 @@
-import { auth } from "../Firebase.config";
+import { auth } from "./FirebaseService";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 export class LoginService {

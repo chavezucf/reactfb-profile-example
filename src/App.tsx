@@ -9,9 +9,8 @@ import Login from "./Pages/Login";
 
 import { useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "./Firebase.config";
+import { auth } from "./Services/FirebaseService"; //TODO
 import "./App.css";
-import { wait } from "@testing-library/user-event/dist/utils";
 
 function App() {
   const [isAuth, setIsAuth] = useState(false);
