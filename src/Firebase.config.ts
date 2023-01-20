@@ -4,6 +4,6 @@ export const firebaseConfig = {
   projectId: "reactfb-profile-example",
   storageBucket: "reactfb-profile-example.appspot.com",
   messagingSenderId: "962497871453",
-  appId: "1:962497871453:web:d8a3b4e24661ca9b45d7b4",
-  measurementId: "G-X7GVYW7D7S"
+  appId: "1:962497871453:web:42eb12ecc558de4245d7b4",
+  measurementId: "G-DNFC981LHK",
 };
