@@ -69,7 +69,8 @@ export class UserService {
   static SetUser = async (
     fullName: string,
     email: string,
-    birthday: string
+    birthday: string,
+    imageLocation: string = "imageLocation"
   ) => {
     var userId = auth.currentUser!.uid;
     await setDoc(doc(UserService.UsersCollectionRef, userId), {
@@ -77,6 +78,7 @@ export class UserService {
       fullName,
       email,
       birthday,
+      imageLocation,
     });
   };
 
