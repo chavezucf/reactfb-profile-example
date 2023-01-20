@@ -6,13 +6,20 @@ import "./Profile.css";
 
 function ProfileSettings(props: { isAuth: boolean }) {
   const [showImgPicker, setShowImgPicker] = useState(false);
-  const [user, setUser] = useState<IUser>();
   const [file, setFile] = useState<File>();
   const [isLoading, setLoading] = useState(true);
 
+
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [userId, setUserId] = useState("");
+  
+
   const updateUser = () => {
     setLoading(true);
-    UserService.SetUser(user!.fullName, user!.email, user!.birthday)
+    UserService.SetUser(fullName, email, birthday)
       .then(() => {
         setTimeout(function () {
           setLoading(false);
@@ -27,7 +34,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
   const setUserImage = () => {
     if (file !== undefined) {
       setLoading(true);
-      UserService.SetUserImage(file, user!.userId)
+      UserService.SetUserImage(file, userId)
         .then(() => {
           setTimeout(function () {
             setLoading(false);
@@ -43,7 +50,11 @@ function ProfileSettings(props: { isAuth: boolean }) {
   useEffect(() => {
     UserService.GetCurrentUser()
       .then((user) => {
-        setUser(user);
+        setFullName(user.fullName);
+        setEmail(user.email);
+        setBirthday(user.birthday);
+        setImageUrl(user.imageUrl);
+        setUserId(user.userId);
         setTimeout(function () {
           setLoading(false);
         }, 250);
@@ -52,7 +63,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
         setLoading(false);
         console.log(error);
       });
-  });
+  }, []);
 
   return (
     <div>
@@ -64,7 +75,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
           <div className="row">
             <div className="col-md-3">
               <div className="d-inline">
-                <img src={user?.imageUrl} style={{ width: "125px" }} />
+                <img src={imageUrl} style={{ width: "125px" }} />
                 <div className="pl-2 mt-2">
                   {showImgPicker ? (
                     <div className="mb-3">
@@ -126,23 +137,23 @@ function ProfileSettings(props: { isAuth: boolean }) {
                       className=""
                       id="fullName"
                       placeholder="Full Name"
-                      value={user?.fullName}
+                      value={fullName}
                       onChange={(event) => {
-                        user!.fullName = event.target.value;
-                        setUser(user);
+                        console.log(event.target.value);
+                        setFullName(event.target.value);
                       }}
                     />
                   </div>
                   <div>
                     <input
-                      type="email"
+                      type="text"
                       className=""
                       id="email"
-                      placeholder="Email"
-                      value={user?.email}
+                      name="email"
+                      placeholder="email"
+                      value={email}
                       onChange={(event) => {
-                        user!.email = event.target.value;
-                        setUser(user);
+                        setEmail(event.target.value);
                       }}
                     />
                   </div>
@@ -152,10 +163,9 @@ function ProfileSettings(props: { isAuth: boolean }) {
                       className=""
                       id="birthday"
                       placeholder="Birthday"
-                      value={user?.birthday}
+                      value={birthday}
                       onChange={(event) => {
-                        user!.birthday = event.target.value;
-                        setUser(user);
+                        setBirthday(event.target.value);
                       }}
                     />
                   </div>

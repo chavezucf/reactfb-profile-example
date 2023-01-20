@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 function Login({ setIsAuth, }: {
   setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [email, setEmail] = useState("macof2012@gmail.com"); //TODO
-  const [password, setPassword] = useState("Test1234!");
+  const [email, setEmail] = useState(""); //TODO
+  const [password, setPassword] = useState("");
   let navigate = useNavigate();
 
   const signIn = async () => {

@@ -19,7 +19,7 @@ function HomeFeed(props: { isAuth: boolean }) {
         setLoading(false);
         console.error(error);
       });
-  });
+  }, []);
   return (
     <div>
       {isLoading ? (
