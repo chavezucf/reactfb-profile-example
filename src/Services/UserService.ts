@@ -25,19 +25,26 @@ export class UserService {
     var users: IUser[] = MockUsers
     return users;
   };
-  static GetUsers = async () => {
+  static GetUsers = async (): Promise<IUser[]> => {
     var users: IUser[] = [];
+    
     const querySnapshot = await getDocs(collection(db, "users"));
     querySnapshot.forEach(async (doc) => {
       var user = doc.data() as IUser;
       if (user.imageLocation && user.imageLocation !== "")
         user.imageUrl = DEFAULT_IMG;
-      //user.imageUrl = await UserService.getUserImage(user.userId);
-      else user.imageUrl = DEFAULT_IMG;
+        //user.imageUrl = await UserService.GetUserImage(user.userId);
+      else {
+        user.imageUrl = DEFAULT_IMG;
+        user.imageLocation = "";
+      }
       users.push(user);
     });
-    return users;
+    return new Promise<IUser[]>((resolve) => {
+      resolve(users);
+  });
   };
+
 
   static GetCurrentUser = async () => {
     const docRef = doc(db, "users", auth.currentUser!.uid);

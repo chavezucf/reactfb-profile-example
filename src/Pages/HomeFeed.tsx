@@ -4,15 +4,22 @@ import { UserService } from "../Services/UserService";
 
 function HomeFeed(props: { isAuth: boolean }) {
   const [users, setUsers] = useState<IUser[]>([]);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getUsers = async () => {
-      setUsers(await UserService.GetUsers());
-    };
-    getUsers();
+    UserService.GetUsers()
+    .then((users) => {
+      setUsers(users);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.log("error")
+    })
+
   }, []);
   return (
     <div>
+      { isLoading? <h1> loading </h1> : (
       <div className="wrapper">
         {users.map(function (user,index) {
           return <div key={index} id="formContent" className="mt-5 pt-2">
@@ -30,7 +37,7 @@ function HomeFeed(props: { isAuth: boolean }) {
           </div>;
         })}
 
-      </div>
+      </div>)}
     </div>
   );
 }
