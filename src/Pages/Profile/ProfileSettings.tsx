@@ -7,10 +7,9 @@ import { UserService } from "../../Services/UserService";
 import "./Profile.css";
 
 function ProfileSettings(props: { isAuth: boolean }) {
-  const [fullName, setFullName] = useState("Mike Chavez");
-  const [email, setEmail] = useState("macof2012@gmail.com");
-  const [birthday, setBirthday] = useState("11/12/2020");
-
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
 
   const usersCollectionRef = collection(db, "users");
   let navigate = useNavigate();
@@ -26,9 +25,8 @@ function ProfileSettings(props: { isAuth: boolean }) {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      var user:IUser | undefined = await UserService.getCurrentUser();
-      if(user)
-      {
+      var user: IUser | undefined = await UserService.getCurrentUser();
+      if (user) {
         setFullName(user.fullName);
         setBirthday(user.birthday);
         setEmail(user.email);
@@ -105,7 +103,10 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   <input type="button" value="Save" onClick={createSettings} />
                 </div>
                 <div className="col">
-                  <input type="button" value="Cancel" />
+                  <button
+                    className="btn"
+                    style={{ color: "#8f9096", fontWeight: "600", padding:"15px 80px" }}
+                  >Cancel</button>
                 </div>
               </div>
             </form>

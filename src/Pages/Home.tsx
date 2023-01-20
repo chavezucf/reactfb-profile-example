@@ -14,10 +14,18 @@ function Home(props: { isAuth: boolean }) {
   }, []);
   return (
     <div>
-      <h1> Home </h1>
-      {users.map(function (user, index) {
-        return <h2 key={index}>{user.fullName}</h2>;
-      })}
+      <div className="wrapper">
+        {users.map(function (user, index) {
+          return <div id="formContent" className="mt-5 pt-2">
+            <h2 key={index}>{user.fullName}</h2>
+            <ul>
+              <li>{user.email}</li>
+              <li>{user.birthday}</li>
+            </ul>
+          </div>;
+        })}
+        
+      </div>
     </div>
   );
 }
