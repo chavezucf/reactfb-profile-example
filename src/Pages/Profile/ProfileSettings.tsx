@@ -4,21 +4,26 @@ import { UserService } from "../../Services/UserService";
 import "./Profile.css";
 
 function ProfileSettings(props: { isAuth: boolean }) {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [showImgPicker, setShowImgPicker] = useState(false);
+  const [user, setUser] = useState<IUser>();
+  const [file, setFile] = useState<File>();
 
-  const setUser = async () => {
-    await UserService.setUser(fullName, email, birthday);
+  const updateUser = async () => {
+    await UserService.setUser( user!.fullName,  user!.email, user!.birthday);
+  };
+
+  const setUserImage = async () => {
+    if(file !== undefined )
+      await UserService.setUserImage(file, user!.userId);
+    else 
+      console.error("No file");
   };
 
   useEffect(() => {
     const getCurrentUser = async () => {
       var user: IUser | undefined = await UserService.getCurrentUser();
       if (user) {
-        setFullName(user.fullName);
-        setBirthday(user.birthday);
-        setEmail(user.email);
+        setUser(user);
       }
     };
     getCurrentUser();
@@ -27,22 +32,60 @@ function ProfileSettings(props: { isAuth: boolean }) {
   return (
     <div className="container content clear-fix">
       <h2 className="mt-5 mb-5">Profile Settings</h2>
-      <div className="row">
+      { user ==null ? (<h2>loading</h2>) : (<div className="row">
         <div className="col-md-3">
           <div className="d-inline">
-            <img
-              src="https://randomuser.me/api/portraits/men/74.jpg"
-              style={{ margin: "0" }}
-            />
-            <p className="pl-2 mt-2">
-              <a
-                href="#"
-                className="btn"
-                style={{ color: "#8f9096", fontWeight: "600" }}
-              >
-                Edit Picture
-              </a>
-            </p>
+            <img src={user?.imageUrl} style={{ width: "125px" }} />
+            <div className="pl-2 mt-2">
+              {showImgPicker ? (
+                <div className="mb-3">
+                  <input
+                    className="form-control"
+                    type="file"
+                    id="formFile"
+                    onChange={(event) => {
+                      setFile(event!.target!.files![0]);
+                    }}
+                  />
+                  <button
+                    className="btn mt-3 mr-3"
+                    style={{
+                      color: "white",
+                      backgroundColor: "#56baed",
+                    }}
+                    onClick={setUserImage}
+                  >
+                    Save
+                  </button>
+                  <button
+                    className="btn  mt-3 ml-3"
+                    style={{
+                      marginLeft: "20px",
+                      color: "#8f9096",
+                      fontWeight: "600",
+                    }}
+                    onClick={() => {
+                      setShowImgPicker(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className="btn"
+                  style={{
+                    color: "#8f9096",
+                    fontWeight: "600",
+                  }}
+                  onClick={() => {
+                    setShowImgPicker(true);
+                  }}
+                >
+                  Edit Picture
+                </button>
+              )}
+            </div>
           </div>
         </div>
         <div className="col-md-9">
@@ -54,9 +97,10 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="fullName"
                   placeholder="Full Name"
-                  value={fullName}
+                  value={user?.fullName}
                   onChange={(event) => {
-                    setFullName(event.target.value);
+                    user!.fullName = event.target.value;
+                    setUser(user);
                   }}
                 />
               </div>
@@ -66,9 +110,10 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="email"
                   placeholder="Email"
-                  value={email}
+                  value={user?.email}
                   onChange={(event) => {
-                    setEmail(event.target.value);
+                    user!.email = event.target.value;
+                    setUser(user);
                   }}
                 />
               </div>
@@ -78,15 +123,16 @@ function ProfileSettings(props: { isAuth: boolean }) {
                   className=""
                   id="birthday"
                   placeholder="Birthday"
-                  value={birthday}
+                  value={user?.birthday}
                   onChange={(event) => {
-                    setBirthday(event.target.value);
+                    user!.birthday = event.target.value;
+                    setUser(user);
                   }}
                 />
               </div>
               <div className="row mt-5">
                 <div className="col">
-                  <input type="button" value="Save" onClick={setUser} />
+                  <input type="button" value="Save" onClick={updateUser} />
                 </div>
                 <div className="col">
                   <button
@@ -104,7 +150,7 @@ function ProfileSettings(props: { isAuth: boolean }) {
             </form>
           </div>
         </div>
-      </div>
+      </div>)}
     </div>
   );
 }
